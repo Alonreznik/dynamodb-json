@@ -4,20 +4,29 @@ import sys
 from setuptools import setup, find_packages
 
 if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    os.system('python setup.py bdist_wheel upload')
+    # Remove old distributions
+    dist_ = 'dist'
+    for f in os.listdir(dist_):
+        file_path = os.path.join(dist_, f)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+
+    os.system('python setup.py sdist')
+    os.system('python setup.py bdist_wheel')
+    os.system('twine upload dist/* -r testpypi')
     print("Make a tag to me")
-    print("  git tag -a {0} -m 'version {0}'".format(__import__('pynamodb').__version__))
+    print("  git tag -a {0} -m 'version {0}'".format(__import__('dynamodb_json').__version__))
     print("  git push --tags")
     sys.exit()
 
 install_requires = [
     'simplejson',
+    'botocore>=1.5.0,<1.6.0'
     'boto3',
 ]
 
 setup(
-    name='dynamodb_json',
+    name='dynamodb-json',
     version=__import__('dynamodb_json').__version__,
     packages=find_packages(),
     url='https://github.com/Alonreznik/dynamodb-json',
@@ -30,11 +39,12 @@ setup(
     keywords='python dynamodb amazon json aws',
     install_requires=install_requires,
     classifiers=[
-        'Development Status :: 1',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'Programming Language :: Python',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7',
-        'License :: OSI Approved :: Mozilla',
+        'Programming Language :: Python :: 2.6',
+        'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
     ],
 )
