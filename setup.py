@@ -13,16 +13,16 @@ if sys.argv[-1] == 'publish':
 
     os.system('python setup.py sdist')
     os.system('python setup.py bdist_wheel')
-    os.system('twine upload dist/* -r testpypi')
+    os.system('python setup.py register -r https://pypi.python.org/pypi')
+    os.system('twine upload dist/* -r pypi')
     print("Make a tag to me")
     print("  git tag -a {0} -m 'version {0}'".format(__import__('dynamodb_json').__version__))
     print("  git push --tags")
     sys.exit()
 
 install_requires = [
-    'simplejson',
-    'botocore>=1.5.0,<1.6.0'
-    'boto3',
+    'simplejson>=3.10.0',
+    'boto3>=1.4.0',
 ]
 
 setup(
