@@ -2,8 +2,7 @@ import time
 import uuid
 from datetime import datetime
 from decimal import Decimal
-
-from json_util import dumps, loads
+from dynamodb_json import json_util as json
 
 json_ = {"MyString": "a",
          "num": 4,
@@ -27,6 +26,6 @@ json_ = {"MyString": "a",
          }
     }
 
-dynamodb_json = dumps(json_)
+dynamodb_json = json.dumps(json_)
 print dynamodb_json
-print loads(dynamodb_json)
+print json.loads(dynamodb_json)
