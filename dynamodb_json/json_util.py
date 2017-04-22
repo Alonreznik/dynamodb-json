@@ -21,8 +21,6 @@ def json_serial(o):
         serial = str(o.hex)
     elif isinstance(o, set):
         serial = list(o)
-    elif isinstance(o, time.time):
-        serial = float(0*1000)
     else:
         serial = o
     return serial
@@ -110,4 +108,3 @@ def loads(s, as_dict=False, *args, **kwargs):
         s = json.dumps(s)
     kwargs['object_hook'] = object_hook
     return json.loads(s, *args, **kwargs)
-
