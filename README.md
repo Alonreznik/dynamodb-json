@@ -8,7 +8,7 @@ pip install dynamodb-json
 ```
 # Use
 
-The dyson json util works the same as json loads and dumps functions:
+The dynamodb-json util works the same as json loads and dumps functions:
 ```python
 import time
 import uuid
