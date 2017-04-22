@@ -39,7 +39,7 @@ setup(
     keywords='python dynamodb amazon json aws',
     install_requires=install_requires,
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'Programming Language :: Python',
         'Operating System :: OS Independent',
