@@ -28,7 +28,7 @@ json_ = {"MyString": "a",
          }
 
 as_dict = False
-dynamodb_json = json.dumps(json_, as_dict=as_dict)
+dynamodb_json = json.dumps(json_, as_dict=True)
 print dynamodb_json
 # {
 # "my_dict": {"M": {"my_date": {"S": "2017-04-22T14:41:35.780000"}}},
@@ -50,7 +50,7 @@ print dynamodb_json
 # "MyZero": {"N": "0"}
 # }
 
-my_dict = json.loads(dynamodb_json, as_dict=as_dict)
+my_dict = json.loads(dynamodb_json)
 print my_dict
 
 # {'my_dict': {'my_date': datetime.datetime(2017, 4, 22, 14, 41, 35, 780000)}, 'MyBool': False, 'MyNone': None,

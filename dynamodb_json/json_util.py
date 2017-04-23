@@ -104,7 +104,7 @@ def loads(s, as_dict=False, *args, **kwargs):
         :param s - the json string or dict (with the as_dict variable set to True) to convert
         :returns python dict object
     """
-    if as_dict:
+    if as_dict or (not isinstance(s, basestring)):
         s = json.dumps(s)
     kwargs['object_hook'] = object_hook
     return json.loads(s, *args, **kwargs)
