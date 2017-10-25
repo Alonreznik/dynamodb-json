@@ -23,6 +23,7 @@ if sys.argv[-1] == 'publish':
 install_requires = [
     'simplejson>=3.10.0',
     'boto3>=1.4.0',
+    'six'
 ]
 
 setup(
@@ -45,6 +46,7 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 3',
         'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
     ],
 )

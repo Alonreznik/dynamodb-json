@@ -1,7 +1,8 @@
 import re
 import uuid
 from decimal import Decimal
-from sys import maxint
+import six
+import sys
 from datetime import datetime
 import simplejson as json
 from boto3.dynamodb.types import TypeSerializer
@@ -13,7 +14,9 @@ def json_serial(o):
     elif isinstance(o, Decimal):
         if o % 1 > 0:
             serial = float(o)
-        elif o < maxint:
+        elif six.PY3:
+            serial = int(o)
+        elif o < sys.maxint:
             serial = int(o)
         else:
             serial = long(o)
@@ -37,9 +40,9 @@ def dumps(dct, as_dict=False, **kwargs):
     result_ = TypeSerializer().serialize(json.loads(json.dumps(dct, default=json_serial),
                                                     use_decimal=True))
     if as_dict:
-        return result_.iteritems().next()[1]
+        return six.iteritems(result_).next()[1]
     else:
-        return json.dumps(result_.iteritems().next()[1], **kwargs)
+        return json.dumps(six.iteritems(result_).next()[1], **kwargs)
 
 
 def object_hook(dct):
@@ -80,8 +83,8 @@ def object_hook(dct):
         return dct
 
     # In a Case of returning a regular python dict
-    for key, val in dct.iteritems():
-        if isinstance(val, basestring):
+    for key, val in six.iteritems(dct):
+        if isinstance(val, six.string_types):
             try:
                 dct[key] = datetime.strptime(val, '%Y-%m-%dT%H:%M:%S.%f')
             except:
@@ -104,7 +107,7 @@ def loads(s, as_dict=False, *args, **kwargs):
         :param s - the json string or dict (with the as_dict variable set to True) to convert
         :returns python dict object
     """
-    if as_dict or (not isinstance(s, basestring)):
+    if as_dict or (not isinstance(s, six.string_types)):
         s = json.dumps(s)
     kwargs['object_hook'] = object_hook
     return json.loads(s, *args, **kwargs)
