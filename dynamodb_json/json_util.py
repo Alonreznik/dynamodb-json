@@ -16,10 +16,10 @@ def json_serial(o):
             serial = float(o)
         elif six.PY3:
             serial = int(o)
-        elif o < sys.maxint:
+        elif o < sys.maxsize:
             serial = int(o)
         else:
-            serial = long(o)
+            serial = int(o)
     elif isinstance(o, uuid.UUID):
         serial = str(o.hex)
     elif isinstance(o, set):
@@ -40,9 +40,9 @@ def dumps(dct, as_dict=False, **kwargs):
     result_ = TypeSerializer().serialize(json.loads(json.dumps(dct, default=json_serial),
                                                     use_decimal=True))
     if as_dict:
-        return six.iteritems(result_).next()[1]
+        return next(six.iteritems(result_))[1]
     else:
-        return json.dumps(six.iteritems(result_).next()[1], **kwargs)
+        return next(json.dumps(six.iteritems(result_))[1], **kwargs)
 
 
 def object_hook(dct):
@@ -66,9 +66,9 @@ def object_hook(dct):
                 try:
                     return int(dct['N'])
                 except:
-                    return long(dct['N'])
+                    return int(dct['N'])
         if 'B' in dct:
-            return unicode(dct['B'])
+            return str(dct['B'])
         if 'NS' in dct:
             return set(dct['NS'])
         if 'BS' in dct:
@@ -97,7 +97,7 @@ def object_hook(dct):
             elif val < maxint:
                 dct[key] = int(val)
             else:
-                dct[key] = long(val)
+                dct[key] = int(val)
 
     return dct
 

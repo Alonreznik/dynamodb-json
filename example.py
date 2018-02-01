@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import time
 import uuid
 from datetime import datetime
@@ -12,7 +14,7 @@ json_ = {"MyString": "a",
          "MyNone": None,
          "MyZero": 0,
          "myDecimal": Decimal("19.2"),  # converts Decimal to float, load it as float
-         "myLong": long(1938475658493),
+         "myLong": int(1938475658493),
          "MyNestedDict": {
              "my_other_nested": {
                  "name": "John",
@@ -29,7 +31,7 @@ json_ = {"MyString": "a",
 
 as_dict = False
 dynamodb_json = json.dumps(json_, as_dict=True)
-print dynamodb_json
+print(dynamodb_json)
 # {
 # "my_dict": {"M": {"my_date": {"S": "2017-04-22T14:41:35.780000"}}},
 # "MyBool": {"BOOL": false}, "MyNone": {"NULL": true},
@@ -51,7 +53,7 @@ print dynamodb_json
 # }
 
 my_dict = json.loads(dynamodb_json)
-print my_dict
+print(my_dict)
 
 # {'my_dict': {'my_date': datetime.datetime(2017, 4, 22, 14, 41, 35, 780000)}, 'MyBool': False, 'MyNone': None,
 #  'MyNestedDict': {
