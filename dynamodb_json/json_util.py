@@ -95,7 +95,7 @@ def object_hook(dct):
             if val % 1 > 0:
                 dct[key] = float(val)
             elif six.PY3:
-                dct[key] = int(o)
+                dct[key] = int(val)
             elif val < sys.maxsize:
                 dct[key] = int(val)
             else:
