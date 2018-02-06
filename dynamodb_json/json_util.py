@@ -19,7 +19,7 @@ def json_serial(o):
         elif o < sys.maxsize:
             serial = int(o)
         else:
-            serial = int(o)
+            serial = long(o)
     elif isinstance(o, uuid.UUID):
         serial = str(o.hex)
     elif isinstance(o, set):
@@ -42,7 +42,7 @@ def dumps(dct, as_dict=False, **kwargs):
     if as_dict:
         return next(six.iteritems(result_))[1]
     else:
-        return next(json.dumps(six.iteritems(result_))[1], **kwargs)
+        return json.dumps(next(six.iteritems(result_))[1], **kwargs)
 
 
 def object_hook(dct):
@@ -94,10 +94,12 @@ def object_hook(dct):
         if isinstance(val, Decimal):
             if val % 1 > 0:
                 dct[key] = float(val)
-            elif val < maxint:
+            elif six.PY3:
+                dct[key] = int(o)
+            elif val < sys.maxsize:
                 dct[key] = int(val)
             else:
-                dct[key] = int(val)
+                dct[key] = long(val)
 
     return dct
 

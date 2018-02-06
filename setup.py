@@ -13,7 +13,7 @@ if sys.argv[-1] == 'publish':
 
     os.system('python setup.py sdist')
     os.system('python setup.py bdist_wheel')
-    os.system('python setup.py register -r https://pypi.python.org/pypi')
+    # os.system('python setup.py register -r https://pypi.python.org/pypi')
     os.system('twine upload dist/* -r pypi')
     print("Make a tag to me")
     print("  git tag -a {0} -m 'version {0}'".format(__import__('dynamodb_json').__version__))
@@ -46,7 +46,10 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6'
         'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
     ],
 )
