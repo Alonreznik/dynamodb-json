@@ -51,7 +51,7 @@ print(dynamodb_json)
 # "myLong": {"N": "1938475658493"},
 # "MyZero": {"N": "0"}
 # }
-
+print("*******")
 my_dict = json.loads(dynamodb_json)
 print(my_dict)
 
