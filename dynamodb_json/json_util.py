@@ -3,7 +3,7 @@ import uuid
 from decimal import Decimal
 import six
 import sys
-from datetime import datetime
+from datetime import datetime, date
 import simplejson as json
 from boto3.dynamodb.types import TypeSerializer
 
@@ -11,6 +11,8 @@ from boto3.dynamodb.types import TypeSerializer
 def json_serial(o):
     if isinstance(o, datetime):
         serial = o.strftime('%Y-%m-%dT%H:%M:%S.%f')
+    elif isinstance(o, date):
+        serial = o.strftime('%Y-%m-%d')
     elif isinstance(o, Decimal):
         if o % 1 > 0:
             serial = float(o)
