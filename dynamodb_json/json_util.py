@@ -19,7 +19,7 @@ def json_serial(o):
         elif o < sys.maxsize:
             serial = int(o)
         else:
-            serial = long(o)
+            serial = int(o)
     elif isinstance(o, uuid.UUID):
         serial = str(o.hex)
     elif isinstance(o, set):
@@ -60,7 +60,7 @@ def object_hook(dct):
         if 'SS' in dct:
             return list(dct['SS'])
         if 'N' in dct:
-            if re.match("^-?\d+?\.\d+?$", dct['N']) is not None:
+            if re.match(r"^-?\d+?\.\d+?$", dct['N']) is not None:
                 return float(dct['N'])
             else:
                 try:
@@ -99,7 +99,7 @@ def object_hook(dct):
             elif val < sys.maxsize:
                 dct[key] = int(val)
             else:
-                dct[key] = long(val)
+                dct[key] = int(val)
 
     return dct
 
