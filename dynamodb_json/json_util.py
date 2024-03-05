@@ -60,7 +60,7 @@ def object_hook(dct):
         if 'SS' in dct:
             return list(dct['SS'])
         if 'N' in dct:
-            if re.match("^-?\d+?\.\d+?$", dct['N']) is not None:
+            if re.match(r"^-?\d+?\.\d+?$", dct['N']) is not None:
                 return float(dct['N'])
             else:
                 try:
