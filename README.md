@@ -9,7 +9,7 @@ pip install dynamodb-json
 # Use
 
 The dynamodb-json util works the same as json loads and dumps functions:
-```python
+```
 import time
 import uuid
 from datetime import datetime
