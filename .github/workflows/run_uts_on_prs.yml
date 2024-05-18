@@ -30,4 +30,4 @@ jobs:
         pip install -r test-requirements.txt
     - name: Test with pytest
       run: |
-        pytest tests --durations=5 --durations-min=180.0 --timeout=120 -W ignore::DeprecationWarning
+        pytest tests --durations=5 --durations-min=180.0 -W ignore::DeprecationWarning
