@@ -2,7 +2,7 @@ import pytest
 from pytest import param
 from dynamodb_json import json_util
 from uuid import UUID
-from datetime import datetime
+from datetime import datetime, date
 from decimal import Decimal
 
 
@@ -13,7 +13,7 @@ from decimal import Decimal
             {"MyString": "a",
              "num": 4,
              "MyBool": False,
-             "my_dict": {"my_date": datetime(2017, 4, 22, 14, 41, 35, 780000)},
+             "my_dict": {"my_date": datetime(2017, 4, 22, 14, 41, 35, 780000), "my_date2": date(2017, 4, 22)},
              "MyNone": None,
              "MyZero": 0,
              "myDecimal": Decimal("19.2"),  # converts Decimal to float, load it as float
@@ -33,7 +33,7 @@ from decimal import Decimal
              },
             True,
             {
-                "my_dict": {"M": {"my_date": {"S": "2017-04-22T14:41:35.780000"}}},
+                "my_dict": {"M": {"my_date": {"S": "2017-04-22T14:41:35.780000"}, "my_date2": {"S": "2017-04-22"}}},
                 "MyBool": {"BOOL": False},
                 "MyNone": {"NULL": True},
                 "MyNestedDict": {
