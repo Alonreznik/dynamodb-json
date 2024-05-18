@@ -21,7 +21,7 @@ def json_serial(o):
         elif o < sys.maxsize:
             serial = int(o)
         else:
-            serial = long(o)
+            serial = int(o)
     elif isinstance(o, uuid.UUID):
         serial = str(o.hex)
     elif isinstance(o, set):
@@ -101,7 +101,7 @@ def object_hook(dct):
             elif val < sys.maxsize:
                 dct[key] = int(val)
             else:
-                dct[key] = long(val)
+                dct[key] = int(val)
 
     return dct
 
