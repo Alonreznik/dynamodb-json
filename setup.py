@@ -35,6 +35,7 @@ setup(
     author_email='alonreznik@gmail.com',
     description='A DynamoDB json util from and to python objects',
     long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     zip_safe=False,
     license='Mozilla',
     keywords='python dynamodb amazon json aws',
