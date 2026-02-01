@@ -115,3 +115,29 @@ def test_dumps(val, as_dict, expected):
 def test_loads(val, expected):
     dynamodb_json = json_util.loads(val)
     assert dynamodb_json == expected
+
+def test_loads_BOOL_as_key():
+    val = {
+        "S": {"S": "string-value"},
+        "BOOL": {"BOOL": True},
+        "Other": {"S": "other-value"},
+    }
+    expected = {
+        "S": "string-value",
+        "BOOL": True,
+        "Other": "other-value",
+    }
+    dynamodb_json = json_util.loads(val)
+    assert dynamodb_json == expected
+
+def test_loads_S_as_key():
+    val = {
+        "S": {"S": "string-value"},
+        "Other": {"S": "other-value"},
+    }
+    expected = {
+        "S": "string-value",
+        "Other": "other-value",
+    }
+    dynamodb_json = json_util.loads(val)
+    assert dynamodb_json == expected

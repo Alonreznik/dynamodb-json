@@ -50,37 +50,39 @@ def dumps(dct, as_dict=False, **kwargs):
 def object_hook(dct):
     """ DynamoDB object hook to return python values """
     try:
-        # First - Try to parse the dct as DynamoDB parsed
-        if 'BOOL' in dct:
-            return dct['BOOL']
-        if 'S' in dct:
-            val = dct['S']
-            try:
-                return datetime.strptime(val, '%Y-%m-%dT%H:%M:%S.%f')
-            except:
-                return str(val)
-        if 'SS' in dct:
-            return list(dct['SS'])
-        if 'N' in dct:
-            if re.match(r"^-?\d+?\.\d+?$", dct['N']) is not None:
-                return float(dct['N'])
-            else:
+        # AttributeValue objects always have exactly one type key.
+        if len(dct) == 1:
+            key, value = next(six.iteritems(dct))
+            # First - Try to parse the dct as DynamoDB AttributeValue wrapper.
+            if key == 'BOOL':
+                return value
+            if key == 'S':
                 try:
-                    return int(dct['N'])
+                    return datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
                 except:
-                    return int(dct['N'])
-        if 'B' in dct:
-            return str(dct['B'])
-        if 'NS' in dct:
-            return set(dct['NS'])
-        if 'BS' in dct:
-            return set(dct['BS'])
-        if 'M' in dct:
-            return dct['M']
-        if 'L' in dct:
-            return dct['L']
-        if 'NULL' in dct and dct['NULL'] is True:
-            return None
+                    return str(value)
+            if key == 'SS':
+                return list(value)
+            if key == 'N':
+                if re.match(r"^-?\d+?\.\d+?$", value) is not None:
+                    return float(value)
+                else:
+                    try:
+                        return int(value)
+                    except:
+                        return int(value)
+            if key == 'B':
+                return str(value)
+            if key == 'NS':
+                return set(value)
+            if key == 'BS':
+                return set(value)
+            if key == 'M':
+                return value
+            if key == 'L':
+                return value
+            if key == 'NULL' and value is True:
+                return None
     except:
         return dct
 
